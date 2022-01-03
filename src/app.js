@@ -1,6 +1,8 @@
 const path = require("path");
 const express = require("express");
 const hbs = require("hbs");
+const geocode = require("./utils/geocode");
+const forecast = require("./utils/forecast");
 
 const app = express();
 
@@ -40,8 +42,42 @@ app.get("/help", (req, res) => {
 });
 
 app.get("/weather", (req, res) => {
-  res.send({ location: "Mangalore", forecast: 52 });
+  if (!req.query.address) {
+    return res.send({
+      error: "Please provide the address in query string",
+    });
+  }
+  //res.send({ location: "Mangalore", forecast: 52 , address:req.query.address});
+
+  geocode(req.query.address, (error, data) => {
+    if (error) {
+      return res.send({
+        error: "Error while fetching geocode for the address provided",
+      });
+    }
+    //console.log(data);
+    forecast(data, (error, forecastData) => {
+      if (error) {
+        return res.send({
+          error: "Error while fetching forecast for the address provided",
+        });
+      }
+      //console.log(data.location);
+      console.log(forecastData);
+      res.send({
+        location: data.location,
+        forecast: forecastData.finalMessage,
+        address: req.query.address,
+        // message: forecastData.finalMessage,
+      });
+    });
+  });
 });
+
+// app.get("/products", (req, res) => {
+//   console.log(req.query);
+//   res.send({ products: []});
+// });
 
 app.get("/help/*", (req, res) => {
   res.render("404page", {

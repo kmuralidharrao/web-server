@@ -18,6 +18,7 @@
   "homepage": "https://github.com/kmuralidharrao/web-server#readme",
   "dependencies": {
     "express": "^4.17.2",
-    "hbs": "^4.2.0"
+    "hbs": "^4.2.0",
+    "postman-request": "^2.88.1-postman.30"
   }
 }
