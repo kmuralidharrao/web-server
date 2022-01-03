@@ -22,7 +22,9 @@ const forecast = ({ latitude, longitude }, callback) => {
         data.current.temperature +
         " degrees out. It feels like " +
         data.current.feelslike +
-        " degrees out.";
+        " degrees out. The humidity is " +
+        data.current.humidity +
+        ".";
       const forecast = data.current.temperature;
       const finalData = { forecast, finalMessage };
       callback(undefined, finalData);
