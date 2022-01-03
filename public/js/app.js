@@ -17,19 +17,17 @@ weatherForm.addEventListener("submit", (event) => {
   p1.textContent = "Loading...";
   p2.textContent = "";
   console.log("location", location);
-  fetch("http://localhost:3000/weather?address=" + location).then(
-    (response) => {
-      response.json().then((data) => {
-        if (data.error) {
-          console.log(data.error);
-          p1.textContent = data.error;
-        } else {
-          console.log(data.location);
-          p1.textContent = data.location;
-          console.log(data.forecast);
-          p2.textContent = data.forecast;
-        }
-      });
-    }
-  );
+  fetch("/weather?address=" + location).then((response) => {
+    response.json().then((data) => {
+      if (data.error) {
+        console.log(data.error);
+        p1.textContent = data.error;
+      } else {
+        console.log(data.location);
+        p1.textContent = data.location;
+        console.log(data.forecast);
+        p2.textContent = data.forecast;
+      }
+    });
+  });
 });
